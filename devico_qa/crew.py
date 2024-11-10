@@ -1,7 +1,7 @@
 import os
 
 from crewai import Agent, Crew, Process, Task, LLM
-from crewai.project import CrewBase, agent, crew, task
+from crewai.project import CrewBase, agent, crew, task, output_pydantic
 from pathlib import Path
 import yaml
 
@@ -46,15 +46,17 @@ class DevicoQaCrew:
     def find_test_cases_task(self) -> Task:
         return Task(
             config=self.tasks_config['find_test_cases_task'],
-            output_json=TestSuite,
-            output_file='testcases_1.json'
+            # output_json=TestSuite,
+            output_pydantic=TestSuite,
         )
 
     @task
     def fill_test_case_task(self) -> Task:
         return Task(
             config=self.tasks_config['fill_test_case_task'],
-            output_file='report.md'
+            # output_json=TestCase,
+            output_pydantic=TestCase,
+            output_file='testcases_2.json'
         )
 
     @crew

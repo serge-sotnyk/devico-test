@@ -12,5 +12,5 @@ class TestCase(BaseModel):
 
 
 class TestSuite(BaseModel):
-    name: str
-    testcases: list[TestCase]
+    name: str = "Test Suite"
+    testcases: list[TestCase] = Field(default_factory=list)

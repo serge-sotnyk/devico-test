@@ -24,8 +24,8 @@ find_test_cases_task:
 
 fill_test_case_task:
   description: >
-    Carefully analyze the simplified HTML of the webpage, list of active elements and write the steps to implement the 
-    testcase with the expected result(s).
+    Carefully analyze the simplified HTML of the webpage, list of active elements and fill the fields "steps" and 
+    "priority" of the testcase object.
     
     [page_description]
     {page_description}
@@ -40,22 +40,8 @@ fill_test_case_task:
     [/active_elements]
 
     Testcase:    
-    [title]
-    {testcase_title}
-    [/title]
+    {testcase_object}
   expected_output: >
-    Fill the test case object which has the following structure:
+    Fill the fields "steps" and "priority" of the testcase object.
 
-        {
-            "title": "Testcase title",
-            "steps": [
-                "Step 1",
-                "Step 2",
-                ...
-                "Step N"
-            ]
-            "result": [
-                "Expected result 1 (like Button "Click" should be enabled, or field should be highlighted in red)",
-            ] 
-        }
   agent: senior_qa
