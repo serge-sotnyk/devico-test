@@ -48,6 +48,7 @@ class DevicoQaCrew:
             config=self.tasks_config['find_test_cases_task'],
             # output_json=TestSuite,
             output_pydantic=TestSuite,
+            # output_file='testcases_1.json'
         )
 
     @task
@@ -56,7 +57,6 @@ class DevicoQaCrew:
             config=self.tasks_config['fill_test_case_task'],
             # output_json=TestCase,
             output_pydantic=TestCase,
-            output_file='testcases_2.json'
         )
 
     @crew
