@@ -1,18 +1,11 @@
 import os
-
-from crewai import Agent, Crew, Process, Task, LLM
-from crewai.project import CrewBase, agent, crew, task, output_pydantic
 from pathlib import Path
+
 import yaml
+from crewai import Agent, Crew, Process, Task, LLM
+from crewai.project import CrewBase, agent, crew, task
 
 from devico_qa.models import TestSuite, TestCase
-
-
-# Uncomment the following line to use an example of a custom tool
-# from devico_qa.tools.custom_tool import MyCustomTool
-
-# Check our tools documentations for more information on how to use them
-# from crewai_tools import SerperDevTool
 
 
 @CrewBase
@@ -46,16 +39,13 @@ class DevicoQaCrew:
     def find_test_cases_task(self) -> Task:
         return Task(
             config=self.tasks_config['find_test_cases_task'],
-            # output_json=TestSuite,
             output_pydantic=TestSuite,
-            # output_file='testcases_1.json'
         )
 
     @task
     def fill_test_case_task(self) -> Task:
         return Task(
             config=self.tasks_config['fill_test_case_task'],
-            # output_json=TestCase,
             output_pydantic=TestCase,
         )
 
