@@ -37,6 +37,9 @@ def run(root_dir: str):
     }
     investigate_crew = DevicoQaCrew().testcases_finder_crew()
     result = investigate_crew.kickoff(inputs=inputs)
+    # Usage metrics and costs
+    costs = 0.150 * (investigate_crew.usage_metrics.prompt_tokens + investigate_crew.usage_metrics.completion_tokens) / 1_000_000
+    print(f"Total costs: ${costs:.4f}")
 
 
 if __name__ == "__main__":

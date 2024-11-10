@@ -3,6 +3,9 @@ from crewai.project import CrewBase, agent, crew, task
 from pathlib import Path
 import yaml
 
+from devico_qa.models import TestSuite, TestCase
+
+
 # Uncomment the following line to use an example of a custom tool
 # from devico_qa.tools.custom_tool import MyCustomTool
 
@@ -38,6 +41,8 @@ class DevicoQaCrew:
     def find_test_cases_task(self) -> Task:
         return Task(
             config=self.tasks_config['find_test_cases_task'],
+            output_json=TestSuite,
+            output_file='testcases_1.json'
         )
 
     @task
@@ -46,17 +51,6 @@ class DevicoQaCrew:
             config=self.tasks_config['fill_test_case_task'],
             output_file='report.md'
         )
-
-    # @crew
-    # def crew(self) -> Crew:
-    #     """Creates the DevicoQa crew"""
-    #     return Crew(
-    #         agents=self.agents,  # Automatically created by the @agent decorator
-    #         tasks=self.tasks,  # Automatically created by the @task decorator
-    #         process=Process.sequential,
-    #         verbose=True,
-    #         # process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
-    #     )
 
     @crew
     def testcases_finder_crew(self) -> Crew:

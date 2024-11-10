@@ -1,12 +1,16 @@
-from pydantic import BaseModel
+from typing import Literal
+
+from pydantic import BaseModel, Field
 
 
 class TestCase(BaseModel):
     title: str
-    steps: list[str]
-    expected_result: str
+    description: str
+    steps: list[str] = Field(default_factory=list)
+    expected_result: str = ""
+    priority: Literal["low", "medium", "high", ""] = ""
 
 
 class TestSuite(BaseModel):
     name: str
-    cases: list[TestCase]
+    testcases: list[TestCase]
