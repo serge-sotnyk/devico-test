@@ -2,6 +2,7 @@ import os
 import sys
 from pathlib import Path
 
+from crewai import Crew
 from dotenv import load_dotenv
 
 from devico_qa.crew import DevicoQaCrew
@@ -24,6 +25,23 @@ load_dotenv()
 #     }
 #     DevicoQaCrew().crew().kickoff(inputs=inputs)
 
+def print_usage_metrics(crew: Crew) -> tuple[int, int]|float:
+    model_name = os.getenv('OPENAI_MODEL_NAME', 'gpt-4o-mini')
+    if model_name == "gpt-4o-mini":
+        costs = (0.15 * crew.usage_metrics.prompt_tokens +
+                 0.6 *crew.usage_metrics.completion_tokens) / 1_000_000
+    elif model_name == "gpt-4o":
+        costs = (2.5 * crew.usage_metrics.prompt_tokens +
+                 10 * crew.usage_metrics.completion_tokens) / 1_000_000
+    else:
+        costs = (2.5 * crew.usage_metrics.prompt_tokens,
+                 10 * crew.usage_metrics.completion_tokens)
+    if isinstance(costs, tuple):
+        print(f"Total tokens: input={costs[0]:.4f}, output={costs[1]:.4f}")
+    else:
+        print(f"Total costs: ${costs:.4f}")
+    return costs
+
 
 def run(root_dir: str):
     """
@@ -38,8 +56,7 @@ def run(root_dir: str):
     investigate_crew = DevicoQaCrew().testcases_finder_crew()
     result = investigate_crew.kickoff(inputs=inputs)
     # Usage metrics and costs
-    costs = 0.150 * (investigate_crew.usage_metrics.prompt_tokens + investigate_crew.usage_metrics.completion_tokens) / 1_000_000
-    print(f"Total costs: ${costs:.4f}")
+    cost = print_usage_metrics(investigate_crew)
 
 
 if __name__ == "__main__":

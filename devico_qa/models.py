@@ -7,7 +7,7 @@ class TestCase(BaseModel):
     title: str
     description: str
     steps: list[str] = Field(default_factory=list)
-    expected_result: str = ""
+    expected_results: list[str] = Field(default_factory=list)
     priority: Literal["low", "medium", "high", ""] = ""
 
 

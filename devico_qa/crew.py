@@ -1,4 +1,6 @@
-from crewai import Agent, Crew, Process, Task
+import os
+
+from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
 from pathlib import Path
 import yaml
@@ -29,9 +31,12 @@ class DevicoQaCrew:
         with open(config_dir / "tasks.yaml", "r") as f:
             self.tasks_config = yaml.safe_load(f)
 
+        self.llm = LLM(model=os.getenv('OPENAI_MODEL_NAME', 'gpt-4o-mini'), temperature=0.2)
+
     @agent
     def senior_qa(self) -> Agent:
         return Agent(
+            llm=self.llm,
             config=self.agents_config['senior_qa'],
             # tools=[MyCustomTool()], # Example of custom tool, loaded on the beginning of file
             verbose=True
