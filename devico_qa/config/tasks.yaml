@@ -1,33 +1,11 @@
 find_test_cases_task:
   description: >
     Carefully analyze the simplified HTML of the webpage, list of active elements and write the list of testcases that 
-    need to be checked. Fill the following fields of testcase object: title, description and expected_result. Don't 
-    fill the steps and priority fields - they will be filled as a separate task. At this stage you should be attentive
-    to find as many testcases as possible. Testcases should not be complex. Don't combine different testcases (like 
-    good and bad values in inputs, allowed and disallowed file types or size) into one. Check the allowed and disallowed
-    values in inputs in separate tasks.
-    
-    [page_description]
-    {page_description}
-    [/page_description]
-    
-    [simplified_html]
-    {simplified_html}
-    [/simplified_html]
-    
-    [active_elements]
-    {active_elements}
-    [/active_elements]
-
-  expected_output: >
-    A list of testcases that need to be implemented. Don't fill the steps and priority fields - they will be filled
-    as a separate task. If you can separate expected_results into several simple clauses, do it.
-  agent: senior_qa
-
-fill_test_case_task:
-  description: >
-    Carefully analyze the simplified HTML of the webpage, list of active elements and fill the fields "steps" and 
-    "priority" of the testcase object.
+    need to be checked. Fill the following fields of testcase object: title, description, expected_result and priority. 
+    Don't fill the steps and priority fields - they will be filled as a separate task. At this stage you should be 
+    attentive to find as many testcases as possible. Testcases should not be complex. Don't combine different testcases 
+    (like good and bad values in inputs, allowed and disallowed file types or size) into one. Check the allowed and 
+    disallowed values in inputs in separate tasks.
     
     Priority Levels:
     * Low Priority ("low"): Test cases that focus on non-critical aspects of a web page. These include aesthetic 
@@ -44,6 +22,30 @@ fill_test_case_task:
       that impact data flow, or security features such as input validation for sensitive fields. Failures here could 
       prevent the web page from achieving its main purpose or expose critical vulnerabilities.
     
+    
+    [page_description]
+    {page_description}
+    [/page_description]
+    
+    [simplified_html]
+    {simplified_html}
+    [/simplified_html]
+    
+    [active_elements]
+    {active_elements}
+    [/active_elements]
+
+
+  expected_output: >
+    A list of testcases that need to be implemented. Don't fill the steps field - it will be filled
+    as a separate task. If you can separate expected_results into several simple clauses, do it.
+  agent: senior_qa
+
+fill_test_case_task:
+  description: >
+    Carefully analyze the simplified HTML of the webpage, list of active elements and fill the field "steps" 
+    of the testcase object.
+    
     [page_description]
     {page_description}
     [/page_description]
@@ -58,6 +60,7 @@ fill_test_case_task:
 
     Testcase:    
     {testcase_object}
+
   expected_output: >
-    Fill the fields "steps" and "priority" of the testcase object.
+    Fill the field "steps" of the testcase object.
   agent: middle_qa
