@@ -14,7 +14,7 @@ from devico_qa.tools.utils import get_page_description, get_page_elements, get_p
 load_dotenv()
 
 
-def print_usage_metrics(crew: Crew) -> tuple[int, int]|float:
+def print_usage_metrics(crew: Crew, step_title: str="Step") -> tuple[int, int]|float:
     model_name = crew.agents[0].llm.model
     if model_name == "gpt-4o-mini":
         costs = (0.15 * crew.usage_metrics.prompt_tokens +
@@ -26,9 +26,9 @@ def print_usage_metrics(crew: Crew) -> tuple[int, int]|float:
         costs = (2.5 * crew.usage_metrics.prompt_tokens,
                  10 * crew.usage_metrics.completion_tokens)
     if isinstance(costs, tuple):
-        print(f"Total tokens: input={costs[0]:.4f}, output={costs[1]:.4f}")
+        print(f"{step_title} tokens: input={costs[0]}, output={costs[1]}")
     else:
-        print(f"Total costs: ${costs:.4f}")
+        print(f"{step_title} costs: ${costs:.4f}")
     return costs
 
 
@@ -47,7 +47,7 @@ def run(root_dir: str):
     investigate_crew = DevicoQaCrew().testcases_finder_crew()
     result = investigate_crew.kickoff(inputs=inputs_doc_info)
     # Usage metrics and costs
-    cost = print_usage_metrics(investigate_crew)
+    cost = print_usage_metrics(investigate_crew, "Prepare testcases stage")
 
     # Iterate with fill_test_case_crew
     fill_test_case_crew = DevicoQaCrew().testcase_filler_crew()
@@ -69,7 +69,7 @@ def run(root_dir: str):
         f.write(json.dumps(final_res.model_dump()["testcases"], indent=2, ensure_ascii=False))
 
     # Usage metrics and costs
-    cost_2 = print_usage_metrics(fill_test_case_crew)
+    cost_2 = print_usage_metrics(fill_test_case_crew, "Fill testcases stage")
     if isinstance(cost, tuple):
         cost = (cost[0] + cost_2[0], cost[1] + cost_2[1])
         print(f"Total tokens: {cost}")

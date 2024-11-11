@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 import yaml
@@ -24,7 +23,6 @@ class DevicoQaCrew:
         with open(config_dir / "tasks.yaml", "r") as f:
             self.tasks_config = yaml.safe_load(f)
 
-        # self.llm = LLM(model=os.getenv('OPENAI_MODEL_NAME', 'gpt-4o-mini'), temperature=0.2)
         temp = 0.2
         self.senior_llm = LLM(model='gpt-4o', temperature=temp)
         self.middle_llm = LLM(model='gpt-4o-mini', temperature=temp)
@@ -41,7 +39,7 @@ class DevicoQaCrew:
     def middle_qa(self) -> Agent:
         return Agent(
             llm=self.middle_llm,
-            config=self.agents_config['senior_qa'], # use the same config and cheaper model
+            config=self.agents_config['senior_qa'],  # use the same config and cheaper model
             verbose=True
         )
 
