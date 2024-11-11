@@ -12,5 +12,4 @@ class TestCase(BaseModel):
 
 
 class TestSuite(BaseModel):
-    name: str = "Test Suite"
     testcases: list[TestCase] = Field(default_factory=list)

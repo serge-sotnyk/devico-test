@@ -61,4 +61,4 @@ fill_test_case_task:
   expected_output: >
     Fill the fields "steps" and "priority" of the testcase object.
 
-  agent: senior_qa
+  agent: middle_qa
