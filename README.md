@@ -26,10 +26,14 @@ Test task on DS/AI-dev position for Devico
 6. Copy the `.env-example` to `.env` and add your API keys 
 7. Run the script
     ```bash
-    python main.py {directory_of_page}
+    python devico_qa/main.py {directory_of_page}
     ```
     Pass as an argument the directory with the following information:
     * page_description.txt
     * *.html - simplified HTML of the page
     * *.json - list of active elements of the page
 8. Find the result in the `testcases.json` file
+
+# Processing flow
+
+![2qa_stages.jpg](i%2F2qa_stages.jpg)
